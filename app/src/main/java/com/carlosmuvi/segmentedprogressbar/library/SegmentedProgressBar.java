@@ -14,7 +14,7 @@ import android.view.View;
 
 public class SegmentedProgressBar extends View {
 
-    private static final int SEGMENT_COUNT = 10;
+    private static final int SEGMENT_COUNT = 2;
     private static final long SEGMENT_FILL_TIME_MILLISECONDS = 3000;
 
     private int lastCompletedSegment = 0;
@@ -67,9 +67,6 @@ public class SegmentedProgressBar extends View {
         });
         drawingTimer.start();
     }
-
-
-
 
     /*
     PRIVATE METHODS

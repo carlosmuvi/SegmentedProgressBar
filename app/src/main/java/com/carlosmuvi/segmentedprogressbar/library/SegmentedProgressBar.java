@@ -14,7 +14,7 @@ import android.view.View;
 
 public class SegmentedProgressBar extends View {
 
-    private static final int SEGMENT_COUNT = 5;
+    private static final int SEGMENT_COUNT = 10;
     private static final long SEGMENT_FILL_TIME_MILLISECONDS = 3000;
 
     private int lastCompletedSegment = 0;
@@ -54,7 +54,8 @@ public class SegmentedProgressBar extends View {
     public void playSegment() {
         drawingTimer.setListener(new DrawingTimer.Listener() {
             @Override public void onTick(int currentTicks, int totalTicks) {
-                int segmentWidth = getWidth() / SEGMENT_COUNT;
+
+                int segmentWidth = getSegmentWidth();
 
                 currentSegmentProgressInPx = currentTicks * segmentWidth / totalTicks;
                 if (totalTicks <= currentTicks) {
@@ -68,12 +69,14 @@ public class SegmentedProgressBar extends View {
     }
 
 
+
+
     /*
     PRIVATE METHODS
      */
 
     private void drawContainerRectangles(Canvas canvas) {
-        int segmentWidth = getWidth() / SEGMENT_COUNT;
+        int segmentWidth = getSegmentWidth();
 
         int leftX = 0;
         int rightX = leftX + segmentWidth;
@@ -82,13 +85,13 @@ public class SegmentedProgressBar extends View {
 
         for (int i = 0; i < SEGMENT_COUNT; i++) {
             drawRoundedRect(canvas, leftX, topY, rightX, botY, containerRectanglePaint);
-            leftX = leftX + segmentWidth;
-            rightX = rightX + segmentWidth;
+            leftX = leftX + segmentWidth + getSegmentGapWidth();
+            rightX = leftX + segmentWidth;
         }
     }
 
     private void drawCompletedRectangles(Canvas canvas) {
-        int segmentWidth = getWidth() / SEGMENT_COUNT;
+        int segmentWidth = getSegmentWidth();
 
         int leftX = 0;
         int rightX = leftX + segmentWidth;
@@ -97,15 +100,15 @@ public class SegmentedProgressBar extends View {
 
         for (int i = 0; i < lastCompletedSegment; i++) {
             drawRoundedRect(canvas, leftX, topY, rightX, botY, fillRectanglePaint);
-            leftX = leftX + segmentWidth;
-            rightX = rightX + segmentWidth;
+            leftX = leftX + segmentWidth + getSegmentGapWidth();
+            rightX = leftX + segmentWidth;
         }
     }
 
     private void drawCurrentRectangle(Canvas canvas) {
-        int segmentWidth = getWidth() / SEGMENT_COUNT;
+        int segmentWidth = getSegmentWidth();
 
-        int leftX = lastCompletedSegment * segmentWidth;
+        int leftX = lastCompletedSegment * (segmentWidth + getSegmentGapWidth());
         int rightX = leftX + currentSegmentProgressInPx;
         int topY = 0;
         int botY = getHeight();
@@ -151,7 +154,7 @@ public class SegmentedProgressBar extends View {
 
     private Paint buildFillRectanglePaint() {
         Paint paint = new Paint();
-        paint.setColor(Color.YELLOW);
+        paint.setColor(Color.LTGRAY);
         paint.setStyle(Paint.Style.FILL);
         return paint;
     }
@@ -161,5 +164,18 @@ public class SegmentedProgressBar extends View {
         paint.setColor(Color.GREEN);
         paint.setStyle(Paint.Style.FILL);
         return paint;
+    }
+
+    private int getSegmentWidth() {
+        return (getWidth() / SEGMENT_COUNT) - getSegmentGapWidth();
+    }
+
+    private int getSegmentGapWidth() {
+        return dpToPx(1);
+    }
+
+    private int dpToPx(int valueInDp) {
+        float density = getContext().getResources().getDisplayMetrics().density;
+        return (int) (valueInDp * density);
     }
 }

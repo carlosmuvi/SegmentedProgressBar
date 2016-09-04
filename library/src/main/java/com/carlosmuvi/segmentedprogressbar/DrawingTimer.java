@@ -1,4 +1,4 @@
-package com.carlosmuvi.segmentedprogressbar.library;
+package com.carlosmuvi.segmentedprogressbar;
 
 import android.os.Handler;
 

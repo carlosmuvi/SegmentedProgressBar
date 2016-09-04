@@ -9,23 +9,23 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.carlosmuvi.segmentedprogressbar.sample.MainActivity">
+    tools:context="com.carlosmuvi.sample.MainActivity">
 
-  <com.carlosmuvi.segmentedprogressbar.library.SegmentedProgressBar
+  <com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar
       android:id="@+id/segmented_progressbar"
       android:layout_width="match_parent"
       android:layout_height="5dp"/>
   <Button
-      android:text="Pause"
+      android:id="@+id/button3"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content" android:layout_below="@+id/button" android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true" android:id="@+id/button3" android:layout_alignParentRight="true"
-      android:layout_alignParentEnd="true"/>
+      android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentLeft="true"
+      android:layout_alignParentRight="true" android:layout_alignParentStart="true" android:layout_below="@+id/button"
+      android:text="Pause"/>
   <Button
       android:id="@+id/button"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Start next segment" android:layout_below="@+id/segmented_progressbar"
-      android:layout_alignParentLeft="true" android:layout_alignParentStart="true"/>
+      android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+      android:layout_below="@+id/segmented_progressbar" android:text="Start next segment"/>
 
 </RelativeLayout>

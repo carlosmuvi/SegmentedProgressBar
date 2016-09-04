@@ -19,6 +19,6 @@ import static org.junit.Assert.*;
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.carlosmuvi.segmentedprogressbar", appContext.getPackageName());
+        assertEquals("com.carlosmuvi.segmentedprogressbar.test", appContext.getPackageName());
     }
 }

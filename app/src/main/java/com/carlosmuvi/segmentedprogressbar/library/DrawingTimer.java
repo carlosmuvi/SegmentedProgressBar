@@ -9,18 +9,27 @@ import android.os.Handler;
 public class DrawingTimer {
 
     private final Handler handler;
-    private final long tickTimeInMilliseconds;
-    private final int totalTicks;
+    private final long tickTimeInMilliseconds = 30;
+    private int totalTicks;
     private int currentTick = 0;
     private Listener listener;
+    private TimerState timerState = TimerState.IDLE;
 
-    public DrawingTimer(long timeInMilliseconds, long tickTimeInMilliseconds) {
-        this.tickTimeInMilliseconds = tickTimeInMilliseconds;
-        this.totalTicks = (int) (timeInMilliseconds / tickTimeInMilliseconds);
+    public DrawingTimer() {
         handler = new Handler();
     }
 
-    public void start() {
+    public void start(long timeInMilliseconds) {
+        if (timerState == TimerState.IDLE) {
+            this.totalTicks = (int) (timeInMilliseconds / tickTimeInMilliseconds);
+        }
+        if (timerState != TimerState.RUNNING) {
+            timerState = TimerState.RUNNING;
+            runDrawingTask();
+        }
+    }
+
+    private void runDrawingTask() {
         handler.post(new Runnable() {
             @Override public void run() {
                 listener.onTick(currentTick, totalTicks);
@@ -34,17 +43,33 @@ public class DrawingTimer {
         });
     }
 
-    public void stop() {
-        handler.removeCallbacksAndMessages(null);
+    public void pause() {
+        if (timerState == TimerState.RUNNING) {
+            timerState = TimerState.PAUSED;
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
     public void reset() {
-        stop();
+        pause();
+        timerState = TimerState.IDLE;
         currentTick = 0;
     }
 
     public void setListener(Listener listener) {
         this.listener = listener;
+    }
+
+    public boolean isRunning() {
+        return timerState == TimerState.RUNNING;
+    }
+
+    public boolean isPaused() {
+        return timerState == TimerState.PAUSED;
+    }
+
+    enum TimerState {
+        RUNNING, PAUSED, IDLE
     }
 
     interface Listener {

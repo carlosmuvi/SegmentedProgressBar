@@ -135,15 +135,9 @@ public class SegmentedProgressBar extends View {
         path.rQuadTo(-rx, 0, -rx, ry); //top-left corner
         path.rLineTo(0, heightMinusCorners);
 
-        if (true) {
-            path.rLineTo(0, ry);
-            path.rLineTo(width, 0);
-            path.rLineTo(0, -ry);
-        } else {
-            path.rQuadTo(0, ry, rx, ry);//bottom-left corner
-            path.rLineTo(widthMinusCorners, 0);
-            path.rQuadTo(rx, 0, rx, -ry); //bottom-right corner
-        }
+        path.rQuadTo(0, ry, rx, ry);//bottom-left corner
+        path.rLineTo(widthMinusCorners, 0);
+        path.rQuadTo(rx, 0, rx, -ry); //bottom-right corner
 
         path.rLineTo(0, -heightMinusCorners);
 

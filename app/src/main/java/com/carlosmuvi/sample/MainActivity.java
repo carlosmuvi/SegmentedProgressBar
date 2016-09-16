@@ -1,11 +1,11 @@
 package com.carlosmuvi.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,15 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        segmentedProgressBar = (SegmentedProgressBar) findViewById(R.id.segmented_progressbar);
+        initSegmentedProgressBar();
+
         startButton = (Button) findViewById(R.id.button);
         pauseButton = (Button) findViewById(R.id.button3);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Random rand = new Random();
-                long randomNum = 3000 + rand.nextInt((7000) + 1);
-                segmentedProgressBar.playSegment(randomNum);
+                segmentedProgressBar.playSegment(3000);
             }
         });
 
@@ -34,5 +33,17 @@ public class MainActivity extends AppCompatActivity {
                 segmentedProgressBar.pause();
             }
         });
+    }
+
+    private void initSegmentedProgressBar() {
+        segmentedProgressBar = (SegmentedProgressBar) findViewById(R.id.segmented_progressbar);
+        segmentedProgressBar.setSegmentCount(7); // number of segments in your bar
+
+        //customize colors.
+        segmentedProgressBar.setContainerColor(Color.BLUE); //empty segment color
+        segmentedProgressBar.setFillColor(Color.GREEN); //empty segment color
+
+        //set filled segments directly
+        segmentedProgressBar.setCompletedSegments(3);
     }
 }

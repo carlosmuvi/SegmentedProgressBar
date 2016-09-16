@@ -94,7 +94,7 @@ public class SegmentedProgressBar extends View {
     }
 
     public void setCompletedSegments(int completedSegments) {
-        if (completedSegments >= segmentCount) {
+        if (completedSegments <= segmentCount) {
             lastCompletedSegment = completedSegments;
             invalidate();
         }

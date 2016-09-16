@@ -1,6 +1,11 @@
 # SegmentedProgressBar
 Instagram like segmented progress bar for Android.
 
+Screenshots
+-------------------
+
+<img src="art/segmented.png" height="720">
+
 How does it work?
 -------------------
 

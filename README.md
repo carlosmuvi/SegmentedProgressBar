@@ -12,7 +12,7 @@ How does it work?
 Just add the dependency to your build.gradle:
 
 ```gradle
-compile 'com.carlosmuvi.segmentedprogressbar:library:0.1'
+compile 'com.carlosmuvi.segmentedprogressbar:library:0.2'
 ```
 Next, add it to your layout
 

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
   compileSdkVersion 24
@@ -21,13 +22,25 @@ android {
 }
 
 dependencies {
+  //region production libraries
   compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile 'com.android.support:appcompat-v7:25.3.1'
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  //endregion
+
+  //region test libraries
+  testCompile 'junit:junit:4.12'
+  //endregion
+
+  //region android test libraries
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'com.android.support:appcompat-v7:25.3.1'
-  testCompile 'junit:junit:4.12'
+  //endregion
 }
 
 apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+repositories {
+  mavenCentral()
+}
 

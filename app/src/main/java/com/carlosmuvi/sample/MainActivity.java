@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     SegmentedProgressBar segmentedProgressBar;
     Button startButton;
     Button pauseButton;
+    Button resetButton;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         startButton = (Button) findViewById(R.id.button);
         pauseButton = (Button) findViewById(R.id.button3);
+        resetButton = (Button) findViewById(R.id.button2);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
@@ -30,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 segmentedProgressBar.pause();
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                segmentedProgressBar.reset();
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.carlosmuvi.sample;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,13 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSegmentedProgressBar() {
         segmentedProgressBar = (SegmentedProgressBar) findViewById(R.id.segmented_progressbar);
-        segmentedProgressBar.setSegmentCount(7); // number of segments in your bar
-
-        //customize colors.
-        segmentedProgressBar.setContainerColor(Color.BLUE); //empty segment color
-        segmentedProgressBar.setFillColor(Color.GREEN); //empty segment color
 
         //set filled segments directly
-        segmentedProgressBar.setCompletedSegments(3);
+        segmentedProgressBar.setCompletedSegments(1);
     }
 }

@@ -20,20 +20,25 @@ class SegmentedProgressBar : View {
   private lateinit var containerRectanglePaint: Paint
   private lateinit var fillRectanglePaint: Paint
   private lateinit var drawingTimer: DrawingTimer
-  private val propertiesModel = PropertiesModel()
+  private lateinit var properties: PropertiesModel
 
   constructor(context: Context) : super(context) {
     initView()
   }
 
   constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-    initView()
+    initView(attrs)
   }
 
-  private fun initView() {
+  private fun initView(attrs: AttributeSet? = null) {
     initDrawingTimer()
-    containerRectanglePaint = buildContainerRectanglePaint(propertiesModel.containerColor)
-    fillRectanglePaint = buildFillRectanglePaint(propertiesModel.fillColor)
+    initPropertiesModel(attrs)
+    containerRectanglePaint = buildContainerRectanglePaint(properties.containerColor)
+    fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
+  }
+
+  private fun initPropertiesModel(attrs: AttributeSet?) {
+    properties = PropertiesModel(context, attrs)
   }
 
   private fun initDrawingTimer() {
@@ -70,7 +75,7 @@ class SegmentedProgressBar : View {
   }
 
   fun setSegmentCount(segmentCount: Int) {
-    propertiesModel.segmentCount = segmentCount
+    properties.segmentCount = segmentCount
   }
 
   /*
@@ -88,7 +93,7 @@ class SegmentedProgressBar : View {
   }
 
   fun setCompletedSegments(completedSegments: Int) {
-    if (completedSegments <= propertiesModel.segmentCount) {
+    if (completedSegments <= properties.segmentCount) {
       lastCompletedSegment = completedSegments
       invalidate()
     }
@@ -105,10 +110,10 @@ class SegmentedProgressBar : View {
     val topY = 0
     val botY = height
 
-    for (i in 0..propertiesModel.segmentCount - 1) {
+    for (i in 0..properties.segmentCount - 1) {
       drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(),
           containerRectanglePaint)
-      leftX = leftX + segmentWidth + segmentGapWidth
+      leftX = leftX + segmentWidth + properties.segmentGapWidth
       rightX = leftX + segmentWidth
     }
   }
@@ -123,7 +128,7 @@ class SegmentedProgressBar : View {
 
     for (i in 0..lastCompletedSegment - 1) {
       drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), fillRectanglePaint)
-      leftX = leftX + segmentWidth + segmentGapWidth
+      leftX = leftX + segmentWidth + properties.segmentGapWidth
       rightX = leftX + segmentWidth
     }
   }
@@ -131,7 +136,7 @@ class SegmentedProgressBar : View {
   private fun drawCurrentRectangle(canvas: Canvas) {
     val segmentWidth = segmentWidth
 
-    val leftX = lastCompletedSegment * (segmentWidth + segmentGapWidth)
+    val leftX = lastCompletedSegment * (segmentWidth + properties.segmentGapWidth)
     val rightX = leftX + currentSegmentProgressInPx
     val topY = 0
     val botY = height
@@ -186,13 +191,5 @@ class SegmentedProgressBar : View {
   }
 
   private val segmentWidth: Int
-    get() = width / propertiesModel.segmentCount - segmentGapWidth
-
-  private val segmentGapWidth: Int
-    get() = dpToPx(1)
-
-  private fun dpToPx(valueInDp: Int): Int {
-    val density = context.resources.displayMetrics.density
-    return (valueInDp * density).toInt()
-  }
+    get() = width / properties.segmentCount - properties.segmentGapWidth
 }

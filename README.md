@@ -22,7 +22,7 @@ allprojects {
 
 ```gradle
 dependencies {
-        compile 'com.github.carlosmuvi:SegmentedProgressBar:0.4.1'
+        compile 'com.github.carlosmuvi:SegmentedProgressBar:0.6.0'
 }
 
 ```

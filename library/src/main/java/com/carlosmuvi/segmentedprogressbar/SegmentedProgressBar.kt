@@ -101,6 +101,15 @@ class SegmentedProgressBar : View {
     }
   }
 
+  fun incrementCompletedSegments() {
+    if (lastCompletedSegment <= properties.segmentCount) {
+      currentSegmentProgressInPx = 0
+      drawingTimer.reset()
+      lastCompletedSegment++
+      invalidate()
+    }
+  }
+
   fun reset() {
     setCompletedSegments(0)
   }

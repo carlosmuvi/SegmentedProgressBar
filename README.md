@@ -12,7 +12,19 @@ How does it work?
 Just add the dependency to your build.gradle:
 
 ```gradle
-compile 'com.carlosmuvi.segmentedprogressbar:library:0.2'
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+
+```gradle
+dependencies {
+        compile 'com.github.carlosmuvi:SegmentedProgressBar:0.4.1'
+}
+
 ```
 Next, add it to your layout
 
@@ -23,7 +35,9 @@ Next, add it to your layout
       android:layout_height="5dp"/>
 ```
 
-Finally, customize it programatically and play it!
+Finally, customize it and play it!
+
+**Programatically**
 
 ```java
 segmentedProgressBar = (SegmentedProgressBar) findViewById(R.id.segmented_progressbar);
@@ -42,9 +56,30 @@ segmentedProgressBar.playSegment(5000);
 //pause segment
 segmentedProgressBar.pause();
 
+//reset
+segmentedProgressBar.reset();
+
 //set filled segments directly
 segmentedProgressBar.setCompletedSegments(3);
+
+//fill the next empty segment without animation
+segmentedProgressBar.incrementCompletedSegments();
 ```
+
+**In your layout**
+
+```xml
+  <com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar
+      android:id="@+id/segmented_progressbar"
+      android:layout_width="match_parent"
+      android:layout_height="5dp"
+      app:container_color="@color/colorAccent"
+      app:fill_color="@color/colorPrimary"
+      app:gap_size="@dimen/progressbar_gap"
+      app:segment_count="3"
+      />
+```
+
 
 License
 -------

@@ -35,7 +35,8 @@ Next, add it to your layout
       android:layout_height="5dp"/>
 ```
 
-Finally, customize it and play it!
+Usage and customization
+-------------------
 
 **Programatically**
 

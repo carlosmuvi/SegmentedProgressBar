@@ -74,6 +74,13 @@ public class DrawingTimer {
         }
     }
 
+    public void resume() {
+        if (timerState == TimerState.PAUSED) {
+            timerState = TimerState.RUNNING;
+            runDrawingTask();
+        }
+    }
+
     public void reset() {
         pause();
         timerState = TimerState.IDLE;

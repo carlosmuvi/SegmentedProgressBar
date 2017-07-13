@@ -22,7 +22,7 @@ allprojects {
 
 ```gradle
 dependencies {
-        compile 'com.github.carlosmuvi:SegmentedProgressBar:0.4.1'
+        compile 'com.github.carlosmuvi:SegmentedProgressBar:0.6.0'
 }
 
 ```
@@ -35,7 +35,8 @@ Next, add it to your layout
       android:layout_height="5dp"/>
 ```
 
-Finally, customize it and play it!
+Usage and customization
+-------------------
 
 **Programatically**
 
@@ -61,6 +62,9 @@ segmentedProgressBar.reset();
 
 //set filled segments directly
 segmentedProgressBar.setCompletedSegments(3);
+
+//fill the next empty segment without animation
+segmentedProgressBar.incrementCompletedSegments();
 ```
 
 **In your layout**

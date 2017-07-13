@@ -96,9 +96,10 @@ class SegmentedProgressBar : View {
         drawingTimer.setProgress(timeInMilliseconds)
     }
 
-    fun pause() {
-        drawingTimer.pause()
-    }
+    fun pause() = drawingTimer.pause()
+    fun resume() = drawingTimer.resume()
+    fun reset() = setCompletedSegments(0)
+    fun isPaused() = drawingTimer.isPaused
 
     fun setCompletedSegments(completedSegments: Int) {
         if (completedSegments <= properties.segmentCount) {
@@ -109,12 +110,17 @@ class SegmentedProgressBar : View {
         }
     }
 
-    fun getCompletedSegments(): Int {
-        return lastCompletedSegment
+    fun incrementCompletedSegments() {
+        if (lastCompletedSegment <= properties.segmentCount) {
+            currentSegmentProgressInPx = 0
+            drawingTimer.reset()
+            lastCompletedSegment++
+            invalidate()
+        }
     }
 
-    fun reset() {
-        setCompletedSegments(0)
+    fun getCompletedSegments(): Int {
+        return lastCompletedSegment
     }
 
     /*

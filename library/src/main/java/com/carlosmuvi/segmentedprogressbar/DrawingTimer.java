@@ -14,6 +14,8 @@ public class DrawingTimer {
     private int currentTick = 0;
     private Listener listener;
     private TimerState timerState = TimerState.IDLE;
+    private long lastTimeInMilliseconds = 0;
+
 
     public DrawingTimer() {
         handler = new Handler();
@@ -29,6 +31,28 @@ public class DrawingTimer {
         }
     }
 
+    public void setDuration(long timeInMilliseconds) {
+        if (timerState == TimerState.IDLE) {
+            this.totalTicks = (int) (timeInMilliseconds / tickTimeInMilliseconds);
+        }
+    }
+
+    public void setProgress(final long timeInMilliseconds) {
+        handler.post(new Runnable() {
+            @Override public void run() {
+                //if tick is the same do not update
+                if (timeInMilliseconds  == lastTimeInMilliseconds) {
+                    return;
+                }
+                lastTimeInMilliseconds = timeInMilliseconds;
+                currentTick = (int) (timeInMilliseconds / tickTimeInMilliseconds);
+                listener.onTick(currentTick, totalTicks);
+                if (currentTick >= totalTicks) {
+                    reset();
+                }
+            }
+        });
+    }
     private void runDrawingTask() {
         handler.post(new Runnable() {
             @Override public void run() {

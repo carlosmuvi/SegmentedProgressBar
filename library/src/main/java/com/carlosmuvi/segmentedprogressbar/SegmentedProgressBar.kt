@@ -42,10 +42,8 @@ class SegmentedProgressBar : View {
   }
 
   private fun initDrawingTimer() {
-    drawingTimer = DrawingTimer()
-    drawingTimer.setListener { currentTicks, totalTicks ->
+    drawingTimer = DrawingTimer { currentTicks, totalTicks ->
       val segmentWidth = segmentWidth
-
       currentSegmentProgressInPx = currentTicks * segmentWidth / totalTicks
       if (totalTicks <= currentTicks) {
         lastCompletedSegment++
@@ -140,7 +138,7 @@ class SegmentedProgressBar : View {
 
     for (i in 0..lastCompletedSegment - 1) {
       drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), fillRectanglePaint)
-      leftX = leftX + segmentWidth + properties.segmentGapWidth
+      leftX += segmentWidth + properties.segmentGapWidth
       rightX = leftX + segmentWidth
     }
   }

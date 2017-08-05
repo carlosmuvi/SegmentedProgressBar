@@ -6,13 +6,12 @@ import android.os.Handler
  * Created by carlosmuvi on 02/09/16.
  */
 
-class DrawingTimer {
+class DrawingTimer(var listener: ((Int, Int) -> Unit)?) {
 
   private val handler: Handler = Handler()
   private val tickTimeInMilliseconds: Long = 30
   private var totalTicks: Int = 0
   private var currentTick = 0
-  private var listener: Listener? = null
   private var timerState = TimerState.IDLE
 
   fun start(timeInMilliseconds: Long) {
@@ -28,7 +27,7 @@ class DrawingTimer {
   private fun runDrawingTask() {
     handler.post(object : Runnable {
       override fun run() {
-        listener!!.onTick(currentTick, totalTicks)
+        listener?.invoke(currentTick, totalTicks)
         currentTick++
         if (currentTick <= totalTicks) {
           handler.postDelayed(this, tickTimeInMilliseconds)
@@ -59,10 +58,6 @@ class DrawingTimer {
     currentTick = 0
   }
 
-  fun setListener(listener: Listener) {
-    this.listener = listener
-  }
-
   val isRunning: Boolean
     get() = timerState == TimerState.RUNNING
 
@@ -71,9 +66,5 @@ class DrawingTimer {
 
   internal enum class TimerState {
     RUNNING, PAUSED, IDLE
-  }
-
-  interface Listener {
-    fun onTick(currentTicks: Int, totalTicks: Int)
   }
 }

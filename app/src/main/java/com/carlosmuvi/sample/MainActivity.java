@@ -1,9 +1,11 @@
 package com.carlosmuvi.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
         initSegmentedProgressBar();
 
-        startButton = (Button) findViewById(R.id.button);
-        pauseResumeButton = (Button) findViewById(R.id.button3);
-        resetButton = (Button) findViewById(R.id.button2);
-        startWithoutAnimationButton = (Button) findViewById(R.id.button4);
+        startButton = findViewById(R.id.button);
+        pauseResumeButton = findViewById(R.id.button3);
+        resetButton = findViewById(R.id.button2);
+        startWithoutAnimationButton = findViewById(R.id.button4);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSegmentedProgressBar() {
-        segmentedProgressBar = (SegmentedProgressBar) findViewById(R.id.segmented_progressbar);
+        segmentedProgressBar = findViewById(R.id.segmented_progressbar);
 
         //set filled segments directly
         segmentedProgressBar.setCompletedSegments(1);

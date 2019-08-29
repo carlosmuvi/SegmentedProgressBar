@@ -21,6 +21,7 @@
       app:fill_color="@color/colorPrimary"
       app:gap_size="@dimen/progressbar_gap"
       app:segment_count="3"
+      app:corner_radius="0dp"
       />
 
   <Button

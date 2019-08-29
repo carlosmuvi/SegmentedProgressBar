@@ -11,6 +11,7 @@ data class PropertiesModel(val context: Context, val attrs: AttributeSet?) {
   var containerColor: Int
   var fillColor: Int
   var segmentGapWidth: Int
+  var cornerRadius: Float
 
   init {
     if (attrs != null) {
@@ -19,11 +20,13 @@ data class PropertiesModel(val context: Context, val attrs: AttributeSet?) {
       containerColor = styledAttrs.getColor(R.styleable.SegmentedProgressBar_container_color, Color.LTGRAY)
       fillColor = styledAttrs.getColor(R.styleable.SegmentedProgressBar_fill_color, Color.BLUE)
       segmentGapWidth = styledAttrs.getDimensionPixelSize(R.styleable.SegmentedProgressBar_gap_size, dpToPx(1))
+      cornerRadius = styledAttrs.getDimensionPixelSize(R.styleable.SegmentedProgressBar_corner_radius, dpToPx(6)).toFloat()
     } else {
       segmentCount = 5
       containerColor = Color.LTGRAY
       fillColor = Color.BLUE
       segmentGapWidth = dpToPx(1)
+      cornerRadius = dpToPx(6).toFloat()
     }
   }
 

@@ -2,10 +2,6 @@ package com.carlosmuvi.segmentedprogressbar;
 
 import android.os.Handler;
 
-/**
- * Created by carlosmuvi on 02/09/16.
- */
-
 public class DrawingTimer {
 
     private final Handler handler;

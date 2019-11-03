@@ -1,71 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.carlosmuvi.sample.MainActivity"
-    >
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.carlosmuvi.sample.MainActivity">
 
-  <com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar
-      android:id="@+id/segmented_progressbar"
-      android:layout_width="match_parent"
-      android:layout_height="5dp"
-      app:container_color="@color/colorAccent"
-      app:fill_color="@color/colorPrimary"
-      app:gap_size="@dimen/progressbar_gap"
-      app:segment_count="3"
-      app:corner_radius="0dp"
-      />
+    <com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar
+        android:id="@+id/segmented_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        app:container_color="@color/colorAccent"
+        app:corner_radius="0dp"
+        app:fill_color="@color/colorPrimary"
+        app:gap_size="@dimen/progressbar_gap"
+        app:segment_count="3" />
 
-  <Button
-      android:id="@+id/button3"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/button"
-      android:text="Pause/Resume"
-      />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pause_resume" />
 
-  <Button
-      android:id="@+id/button4"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/button2"
-      android:text="Start without animation"
-      />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_without_animation" />
 
-  <Button
-      android:id="@+id/button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/segmented_progressbar"
-      android:text="Start next segment"
-      />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_next_segment" />
 
-  <Button
-      android:id="@+id/button2"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Reset"
-      android:layout_below="@+id/button3"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reset" />
 
-</RelativeLayout>
+</LinearLayout>

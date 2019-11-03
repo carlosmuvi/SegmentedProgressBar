@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 28
+  compileSdkVersion 29
   buildToolsVersion "28.0.3"
   defaultConfig {
     applicationId "com.carlosmuvi.segmentedprogressbar"
     minSdkVersion 15
-    targetSdkVersion 28
+    targetSdkVersion 29
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -21,6 +21,6 @@ android {
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation 'androidx.appcompat:appcompat:1.0.2'
+  implementation 'androidx.appcompat:appcompat:1.1.0'
   implementation project(':library')
 }

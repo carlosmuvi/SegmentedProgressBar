@@ -2,6 +2,7 @@
 <resources>
   <declare-styleable name="SegmentedProgressBar">
     <attr name="gap_size" format="dimension" />
+    <attr name="corner_radius" format="dimension" />
     <attr name="segment_count" format="integer" />
     <attr name="fill_color" format="color" />
     <attr name="container_color" format="color" />

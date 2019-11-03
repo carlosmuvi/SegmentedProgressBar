@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SegmentedProgressBar.iml" filepath="$PROJECT_DIR$/SegmentedProgressBar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/SegmentedProgressBar-app.iml" filepath="$PROJECT_DIR$/app/SegmentedProgressBar-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/SegmentedProgressBar-library.iml" filepath="$PROJECT_DIR$/library/SegmentedProgressBar-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/code-SegmentedProgressBar.iml" filepath="$PROJECT_DIR$/code-SegmentedProgressBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>

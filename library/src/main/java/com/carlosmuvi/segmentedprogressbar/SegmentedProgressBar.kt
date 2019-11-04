@@ -154,7 +154,13 @@ class SegmentedProgressBar : View {
     }
 
     private fun drawRoundedRect(
-            canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, paint: Paint) {
+        canvas: Canvas,
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+        paint: Paint
+    ) {
 
         val path = Path()
         var rx = properties.cornerRadius.toFloat()

@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         startWithoutAnimationButton = findViewById(R.id.button4);
 
         startButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 segmentedProgressBar.playSegment(3000);
             }
         });

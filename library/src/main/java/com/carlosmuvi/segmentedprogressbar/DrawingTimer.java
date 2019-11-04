@@ -4,8 +4,9 @@ import android.os.Handler;
 
 public class DrawingTimer {
 
+    private static final long TICK_TIME_MILLISECONDS = 10;
+
     private final Handler handler;
-    private final long tickTimeInMilliseconds = 30;
     private int totalTicks;
     private int currentTick = 0;
     private Listener listener;
@@ -16,8 +17,9 @@ public class DrawingTimer {
     }
 
     public void start(long timeInMilliseconds) {
+        requireMinimumTickTime(timeInMilliseconds);
         if (timerState == TimerState.IDLE) {
-            this.totalTicks = (int) (timeInMilliseconds / tickTimeInMilliseconds);
+            this.totalTicks = (int) (timeInMilliseconds / TICK_TIME_MILLISECONDS);
         }
         if (timerState != TimerState.RUNNING) {
             timerState = TimerState.RUNNING;
@@ -25,13 +27,24 @@ public class DrawingTimer {
         }
     }
 
+    private void requireMinimumTickTime(long timeInMilliseconds) {
+        if (timeInMilliseconds < TICK_TIME_MILLISECONDS) {
+            String errorMessage = "A minimum of " +
+                    TICK_TIME_MILLISECONDS +
+                    " milliseconds is required, but input is " +
+                    timeInMilliseconds + " milliseconds.";
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
     private void runDrawingTask() {
         handler.post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 listener.onTick(currentTick, totalTicks);
                 currentTick++;
                 if (currentTick <= totalTicks) {
-                    handler.postDelayed(this, tickTimeInMilliseconds);
+                    handler.postDelayed(this, TICK_TIME_MILLISECONDS);
                 } else {
                     reset();
                 }

@@ -3,9 +3,11 @@ package com.carlosmuvi.sample;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.carlosmuvi.segmentedprogressbar.CompletedSegmentListener;
 import com.carlosmuvi.segmentedprogressbar.SegmentedProgressBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
     Button pauseResumeButton;
     Button resetButton;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -28,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
         startWithoutAnimationButton = findViewById(R.id.button4);
 
         startButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 segmentedProgressBar.playSegment(3000);
             }
         });
 
         pauseResumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 if (segmentedProgressBar.isPaused()) {
                     segmentedProgressBar.resume();
                 } else {
@@ -43,13 +48,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         startWithoutAnimationButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 segmentedProgressBar.incrementCompletedSegments();
             }
         });
 
+
         resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 segmentedProgressBar.reset();
             }
         });
@@ -60,5 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
         //set filled segments directly
         segmentedProgressBar.setCompletedSegments(1);
+
+        segmentedProgressBar.setCompletedSegmentListener(new CompletedSegmentListener() {
+            @Override
+            public void onSegmentCompleted(int segmentCount) {
+                Toast.makeText(MainActivity.this, "Completed segment" + segmentCount, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

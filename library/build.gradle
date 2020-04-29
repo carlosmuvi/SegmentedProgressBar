@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: "io.gitlab.arturbosch.detekt"
+//apply plugin: "io.gitlab.arturbosch.detekt"
 
 android {
     compileSdkVersion 29

@@ -11,14 +11,14 @@ buildscript {
     }
 }
 
-plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC10"
-}
+//plugins {
+//    id "io.gitlab.arturbosch.detekt" version "1.0.0-RC10"
+//}
 
 allprojects {
 
-    apply from: "$rootDir/ktlint.gradle"
-    apply from: "$rootDir/detekt.gradle"
+//    apply from: "$rootDir/ktlint.gradle"
+//    apply from: "$rootDir/detekt.gradle"
 
     repositories {
         jcenter()

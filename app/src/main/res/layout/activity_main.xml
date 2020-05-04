@@ -20,7 +20,9 @@
         app:corner_radius="0dp"
         app:fill_color="@color/colorPrimary"
         app:gap_size="@dimen/progressbar_gap"
-        app:segment_count="3" />
+        app:segment_count="3"
+        app:enable_update_progress_external="true"
+        />
 
     <Button
         android:id="@+id/button3"

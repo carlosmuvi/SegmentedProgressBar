@@ -11,6 +11,7 @@ class PropertiesModel(context: Context, attrs: AttributeSet?) {
     var fillColor: Int = Color.BLUE
     var segmentGapWidth: Int = context.dp(DEFAULT_SEGMENT_GAP_DP)
     var cornerRadius: Int = context.dp(DEFAULT_CORNER_RADIUS_DP)
+    var enableUpdateProgressByExternal: Boolean = false
 
     init {
         if (attrs != null) {
@@ -26,6 +27,8 @@ class PropertiesModel(context: Context, attrs: AttributeSet?) {
                     styledAttrs.getDimensionPixelSize(R.styleable.SegmentedProgressBar_gap_size, segmentGapWidth)
             cornerRadius =
                     styledAttrs.getDimensionPixelSize(R.styleable.SegmentedProgressBar_corner_radius, cornerRadius)
+            enableUpdateProgressByExternal =
+                styledAttrs.getBoolean(R.styleable.SegmentedProgressBar_enable_update_progress_external, false)
         }
     }
 

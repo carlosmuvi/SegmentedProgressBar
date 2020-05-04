@@ -6,5 +6,6 @@
     <attr name="segment_count" format="integer" />
     <attr name="fill_color" format="color" />
     <attr name="container_color" format="color" />
+    <attr name="enable_update_progress_external" format="boolean" />
   </declare-styleable>
 </resources>

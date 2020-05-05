@@ -25,8 +25,32 @@ class MainActivity : AppCompatActivity() {
         startWithoutAnimationButton = findViewById(R.id.button4)
         startButton.setOnClickListener(View.OnClickListener {
             //                segmentedProgressBar.playSegment(3000);
-            var percentage: Float = 0F
-            while (percentage <= 1F) {
+            var percentage = 0F
+
+//            val t = Thread() {
+//                val oldProgress = 0
+//                while (percentage <= 100F) {
+//                    this.runOnUiThread {
+//                        percentage += (10F / 100F)
+//                        Log.d("oskatest2", "showing percentage $percentage")
+//                        segmentedProgressBar!!.updateProgress(percentage)
+//                    }
+//                    Thread.sleep(10)
+//                }
+//            }
+//            t.run()
+
+//            while (percentage <= 100F) {
+//                percentage += (10F / 100F)
+//                Log.d("oskatest2" , "showing percentage $percentage")
+//                segmentedProgressBar!!.updateProgress(percentage)
+//                try {
+//                    Thread.sleep(1000)
+//                } catch (e: InterruptedException) {
+//                    e.printStackTrace()
+//                }
+//            }
+            while (percentage <= 100F) {
                 percentage += (10F / 100F)
                 Log.d("oskatest2" , "showing percentage $percentage")
                 segmentedProgressBar!!.updateProgress(percentage)
@@ -45,16 +69,29 @@ class MainActivity : AppCompatActivity() {
             }
         })
         startWithoutAnimationButton.setOnClickListener(View.OnClickListener {
-            var percentage = 0
-            while (percentage <= 100) {
-                percentage += 10
-                segmentedProgressBar!!.updateProgress(percentage.toFloat())
-                try {
-                    Thread.sleep(100)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
+            var percentage = 0F
+
+            val t = Thread() {
+                while (percentage <= 100F) {
+                    this.runOnUiThread {
+                        percentage += (10F / 100F)
+                        Log.d("oskatest2", "showing percentage $percentage")
+                        segmentedProgressBar!!.updateProgress(percentage)
+                    }
+                    Thread.sleep(10)
                 }
             }
+
+
+//            while (percentage <= 100) {
+//                percentage += 10
+//                segmentedProgressBar!!.updateProgress(percentage.toFloat())
+//                try {
+//                    Thread.sleep(100)
+//                } catch (e: InterruptedException) {
+//                    e.printStackTrace()
+//                }
+//            }
         })
         resetButton.setOnClickListener(View.OnClickListener { segmentedProgressBar!!.reset() })
     }

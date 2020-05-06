@@ -20,7 +20,7 @@ class SegmentedProgressBar : View {
     private lateinit var properties: PropertiesModel
 
     private var segmentCompletedListener: CompletedSegmentListener? = null
-    // Do not user timer
+    // Do not use timer
     private var isUpdateProgressByExternal = false
     constructor(context: Context) : super(context) {
         initView()
@@ -32,11 +32,10 @@ class SegmentedProgressBar : View {
 
     private fun initView(attrs: AttributeSet? = null) {
         initPropertiesModel(attrs)
+        isUpdateProgressByExternal = properties.enableUpdateProgressByExternal
         if(!properties.enableUpdateProgressByExternal) {
             initDrawingTimer()
-        } else {
-
-        }
+        } 
         containerRectanglePaint = buildContainerRectanglePaint(properties.containerColor)
         fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
     }
@@ -57,6 +56,13 @@ class SegmentedProgressBar : View {
             }
             if (totalTicks == currentTicks) segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
             invalidate()
+        }
+    }
+
+    fun setUpdateProgressByExternal(isUpdateProgressByExternal: Boolean) {
+        this.isUpdateProgressByExternal = isUpdateProgressByExternal
+        if (drawingTimer == null) {
+            initDrawingTimer()
         }
     }
 
@@ -118,7 +124,7 @@ class SegmentedProgressBar : View {
      * @param timeInMilliseconds total time that will take for the segment to fill.
      */
     fun playSegment(timeInMilliseconds: Long) {
-        if (drawingTimer != null && !drawingTimer!!.isRunning && !properties.enableUpdateProgressByExternal) {
+        if (!isUpdateProgressByExternal && drawingTimer != null && !drawingTimer!!.isRunning && !properties.enableUpdateProgressByExternal) {
             drawingTimer?.start(timeInMilliseconds)
         }
     }
@@ -139,22 +145,30 @@ class SegmentedProgressBar : View {
     /**
      * If segment filling playing, pauses the progress.
      */
-    fun pause() = drawingTimer?.pause()
+    fun pause() {
+        if (!isUpdateProgressByExternal) drawingTimer?.pause()
+    }
 
     /**
      * If segment filling paused, resumes the progress.
      */
-    fun resume() = drawingTimer?.resume()
+    fun resume() {
+        if (!isUpdateProgressByExternal) drawingTimer?.resume()
+    }
 
     /**
      * Resets the current bar state, clearing all the segments.
      */
-    fun reset() = setCompletedSegments(0)
+    fun reset() {
+        if (!isUpdateProgressByExternal) setCompletedSegments(0)
+    }
 
     /**
      * Checks if the current progress bar filling is paused.
      */
-    fun isPaused() = drawingTimer?.isPaused
+    fun isPaused() {
+        if (!isUpdateProgressByExternal) drawingTimer?.isPaused
+    }
 
     /**
      * Directly the given number of [completedSegments].

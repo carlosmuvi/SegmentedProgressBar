@@ -35,7 +35,7 @@ class SegmentedProgressBar : View {
         isUpdateProgressByExternal = properties.enableUpdateProgressByExternal
         if(!properties.enableUpdateProgressByExternal) {
             initDrawingTimer()
-        } 
+        }
         containerRectanglePaint = buildContainerRectanglePaint(properties.containerColor)
         fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
     }
@@ -124,7 +124,7 @@ class SegmentedProgressBar : View {
      * @param timeInMilliseconds total time that will take for the segment to fill.
      */
     fun playSegment(timeInMilliseconds: Long) {
-        if (!isUpdateProgressByExternal && drawingTimer != null && !drawingTimer!!.isRunning && !properties.enableUpdateProgressByExternal) {
+        if (!isUpdateProgressByExternal && drawingTimer != null && !drawingTimer!!.isRunning) {
             drawingTimer?.start(timeInMilliseconds)
         }
     }

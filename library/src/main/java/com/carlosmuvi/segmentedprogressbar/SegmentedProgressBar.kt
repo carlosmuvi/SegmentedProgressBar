@@ -55,7 +55,9 @@ class SegmentedProgressBar : View {
                 lastCompletedSegment++
                 currentSegmentProgressInPx = 0
             }
-            if (totalTicks == currentTicks) segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
+            if (totalTicks == currentTicks) {
+                segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
+            }
             invalidate()
         }
     }
@@ -145,6 +147,8 @@ class SegmentedProgressBar : View {
      * If segment filling paused, resumes the progress.
      */
     fun resume() = drawingTimer?.resume()
+
+    fun stopTimber() = drawingTimer?.reset()
 
     /**
      * Resets the current bar state, clearing all the segments.

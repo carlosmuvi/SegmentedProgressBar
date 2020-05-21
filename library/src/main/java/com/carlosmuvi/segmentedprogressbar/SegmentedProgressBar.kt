@@ -158,7 +158,7 @@ class SegmentedProgressBar : View {
         if (!isUpdateProgressByExternal) drawingTimer?.resume()
     }
 
-    fun stopTimber() = drawingTimer?.reset()
+    fun stopTimer() = drawingTimer?.reset()
 
     /**
      * Resets the current bar state, clearing all the segments.

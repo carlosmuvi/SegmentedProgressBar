@@ -117,7 +117,7 @@ class SegmentedProgressBar : View {
      * Callback that will be triggered when a segment is filled.
      */
     @Suppress("Unused")
-    fun setCompletedSegmentListener(listener: CompletedSegmentListener) {
+    fun setCompletedSegmentListener(listener: CompletedSegmentListener?) {
         this.segmentCompletedListener = listener
     }
 

@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 //                while (percentage <= 100F) {
 //                    this.runOnUiThread {
 //                        percentage += (10F / 100F)
-//                        Log.d("oskatest2", "showing percentage $percentage")
 //                        segmentedProgressBar!!.updateProgress(percentage)
 //                    }
 //                    Thread.sleep(10)
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
 //            while (percentage <= 100F) {
 //                percentage += (10F / 100F)
-//                Log.d("oskatest2" , "showing percentage $percentage")
 //                segmentedProgressBar!!.updateProgress(percentage)
 //                try {
 //                    Thread.sleep(1000)
@@ -52,7 +50,6 @@ class MainActivity : AppCompatActivity() {
 //            }
             while (percentage <= 100F) {
                 percentage += (10F / 100F)
-                Log.d("oskatest2" , "showing percentage $percentage")
                 segmentedProgressBar!!.updateProgress(percentage)
                 try {
                     Thread.sleep(1000)
@@ -75,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                 while (percentage <= 100F) {
                     this.runOnUiThread {
                         percentage += (10F / 100F)
-                        Log.d("oskatest2", "showing percentage $percentage")
                         segmentedProgressBar!!.updateProgress(percentage)
                     }
                     Thread.sleep(10)

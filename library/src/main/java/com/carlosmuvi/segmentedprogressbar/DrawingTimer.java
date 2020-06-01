@@ -1,7 +1,6 @@
 package com.carlosmuvi.segmentedprogressbar;
 
 import android.os.Handler;
-import android.util.Log;
 
 public class DrawingTimer {
 
@@ -42,7 +41,6 @@ public class DrawingTimer {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("oskatest", "currentTick " + currentTick + ", totalTicks " + totalTicks);
                 listener.onTick(currentTick, totalTicks);
                 currentTick++;
                 if (currentTick <= totalTicks) {

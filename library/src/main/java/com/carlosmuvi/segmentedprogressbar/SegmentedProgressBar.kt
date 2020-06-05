@@ -49,7 +49,6 @@ class SegmentedProgressBar : View {
         drawingTimer?.setListener { currentTicks, totalTicks ->
             val segmentWidth = segmentWidth
             currentSegmentProgressInPx = currentTicks * segmentWidth / totalTicks
-            Log.d("SegmentProgressBar", "progress in px $currentSegmentProgressInPx")
             if (totalTicks <= currentTicks) {
                 lastCompletedSegment++
                 currentSegmentProgressInPx = 0
@@ -71,7 +70,6 @@ class SegmentedProgressBar : View {
     fun updateProgress(percentage: Float) {
         val segmentWidth = segmentWidth
         currentSegmentProgressInPx = (percentage * segmentWidth).toInt()
-        Log.d("SegmentProgressBar", "progress in px $currentSegmentProgressInPx")
         if (percentage >= 1F) {
             lastCompletedSegment++
             currentSegmentProgressInPx = 0

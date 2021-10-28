@@ -17,7 +17,7 @@ class PropertiesModel(context: Context, attrs: AttributeSet?)
     var progressValuePerContainer: Int = 50;
     var progressFilledContainers: BigDecimal = BigDecimal("0.0")
     var progressValue: Float = 0f
-
+    var segmentedContainerColors: HashMap<Int, Int> = HashMap<Int, Int>()
     init
     {
 

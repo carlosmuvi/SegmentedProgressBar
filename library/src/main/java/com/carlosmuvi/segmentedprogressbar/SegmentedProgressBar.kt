@@ -41,8 +41,10 @@ class SegmentedProgressBar : View
         initPropertiesModel(attrs)
 
         containerRectanglePaint = buildContainerRectanglePaint(properties.containerColor)
+
         fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
-        Log.d("hefere", "initView: ")
+
+        Log.d("hefere", "initView: 123 " + properties.segmentedContainerColors[0])
     }
 
     private fun initPropertiesModel(attrs: AttributeSet?)
@@ -58,6 +60,8 @@ class SegmentedProgressBar : View
     private fun initDrawingTimer()
     {
         drawingTimer = DrawingTimer()
+
+
         drawingTimer.setListener { currentTicks, totalTicks ->
             val segmentWidth = segmentWidth
 
@@ -104,6 +108,7 @@ class SegmentedProgressBar : View
     fun setFillColor(@ColorInt color: Int, segmentIndex: Int)
     {
         containerColor.put(segmentIndex, color)
+        properties.segmentedContainerColors = containerColor
     }
 
     /**
@@ -140,6 +145,9 @@ class SegmentedProgressBar : View
      */
     fun playSegment(timeInMilliseconds: Long)
     {
+        if (properties.segmentedContainerColors[lastCompletedSegment] != null)
+            fillRectanglePaint = buildFillRectanglePaint(properties.segmentedContainerColors[lastCompletedSegment]!!)
+
         if (!drawingTimer.isRunning)
         {
             drawingTimer.start(timeInMilliseconds)
@@ -195,10 +203,12 @@ class SegmentedProgressBar : View
             invalidate()
         }
     }
+
     fun setCompletedSegments(completedSegments: Int)
     {
-        setCompletedSegments(completedSegments,0f)
+        setCompletedSegments(completedSegments, 0f)
     }
+
     /*
       PRIVATE METHODS
        */
@@ -257,7 +267,6 @@ class SegmentedProgressBar : View
         val rightX = leftX + currentSegmentProgressInPx
         val topY = 0
         val botY = height
-
 
         drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), fillRectanglePaint)
     }

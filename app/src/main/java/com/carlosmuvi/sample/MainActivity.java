@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         //set filled segments directly
         segmentedProgressBar.setCompletedSegments(1);
 
+        segmentedProgressBar.setSegmentCount(10);
 
-        segmentedProgressBar.setSegmentCount(5);
-        //segmentedProgressBar.setProgress(55);
+        segmentedProgressBar.setProgress(55);
         segmentedProgressBar.setFillColor(Color.parseColor("#F56200"),0);
         segmentedProgressBar.setFillColor(Color.parseColor("#F56200"),1);
         segmentedProgressBar.setFillColor(Color.parseColor("#F5C300"),2);

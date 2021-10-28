@@ -5,12 +5,17 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
+
 import android.view.View
 import androidx.annotation.ColorInt
+import java.math.BigDecimal
 
-class SegmentedProgressBar : View {
+class SegmentedProgressBar : View
+{
 
     private var lastCompletedSegment = 0
+    private var currentPartialCompletedSegment = 0f
     private var currentSegmentProgressInPx = 0
 
     private lateinit var containerRectanglePaint: Paint
@@ -20,42 +25,68 @@ class SegmentedProgressBar : View {
 
     private var segmentCompletedListener: CompletedSegmentListener? = null
 
-    constructor(context: Context) : super(context) {
+    constructor(context: Context) : super(context)
+    {
         initView()
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    {
         initView(attrs)
     }
 
-    private fun initView(attrs: AttributeSet? = null) {
+    private fun initView(attrs: AttributeSet? = null)
+    {
         initDrawingTimer()
         initPropertiesModel(attrs)
+
         containerRectanglePaint = buildContainerRectanglePaint(properties.containerColor)
+
         fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
-    }
 
-    private fun initPropertiesModel(attrs: AttributeSet?) {
+           }
+
+    private fun initPropertiesModel(attrs: AttributeSet?)
+    {
         properties = PropertiesModel(context, attrs)
+
+
+        val sss = properties.progressFilledContainers.subtract(BigDecimal(properties.progressFilledContainers.toInt())).toFloat()
+
+        setCompletedSegments(properties.progressFilledContainers.toInt(), sss)
     }
 
-    private fun initDrawingTimer() {
+    private fun initDrawingTimer()
+    {
         drawingTimer = DrawingTimer()
+
+
+
         drawingTimer.setListener { currentTicks, totalTicks ->
             val segmentWidth = segmentWidth
 
+
+
             currentSegmentProgressInPx = currentTicks * segmentWidth / totalTicks
-            if (totalTicks <= currentTicks) {
+            if (totalTicks <= currentTicks)
+            {
                 lastCompletedSegment++
                 currentSegmentProgressInPx = 0
             }
-            if (totalTicks == currentTicks) segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
+            if (totalTicks == currentTicks)
+            {
+                if(currentPartialCompletedSegment!=0f)
+                    currentPartialCompletedSegment=0f
+                segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
+            }
             invalidate()
         }
     }
 
-    override fun onDraw(canvas: Canvas) {
+    override fun onDraw(canvas: Canvas)
+    {
         super.onDraw(canvas)
+
         drawContainerRectangles(canvas)
         drawCompletedRectangles(canvas)
         drawCurrentRectangle(canvas)
@@ -65,7 +96,8 @@ class SegmentedProgressBar : View {
      * Set the color of the unfilled part of the progress bar.
      */
     @Suppress("Unused")
-    fun setContainerColor(@ColorInt color: Int) {
+    fun setContainerColor(@ColorInt color: Int)
+    {
         containerRectanglePaint = buildContainerRectanglePaint(color)
     }
 
@@ -73,23 +105,44 @@ class SegmentedProgressBar : View {
      * Set the color of the filled part of the progress bar.
      */
     @Suppress("Unused")
-    fun setFillColor(@ColorInt color: Int) {
+    fun setFillColor(@ColorInt color: Int)
+    {
         fillRectanglePaint = buildFillRectanglePaint(color)
+    }
+
+    var containerColor: HashMap<Int, Int> = HashMap<Int, Int>()
+
+    fun setFillColor(@ColorInt color: Int, segmentIndex: Int)
+    {
+        containerColor.put(segmentIndex, color)
+        properties.segmentedContainerColors = containerColor
     }
 
     /**
      * Set the total number of segments that compose the progress bar.
      */
     @Suppress("Unused")
-    fun setSegmentCount(segmentCount: Int) {
+    fun setSegmentCount(segmentCount: Int)
+    {
         properties.segmentCount = segmentCount
+    }
+
+    @Suppress("Unused")
+    fun setProgress(progress: Float)
+    {
+        properties.progressValue = progress
+        properties.calculateContainerValue()
+        val sss = properties.progressFilledContainers.subtract(BigDecimal(properties.progressFilledContainers.toInt())).toFloat()
+
+        setCompletedSegments(properties.progressFilledContainers.toInt(), sss)
     }
 
     /**
      * Callback that will be triggered when a segment is filled.
      */
     @Suppress("Unused")
-    fun setCompletedSegmentListener(listener: CompletedSegmentListener) {
+    fun setCompletedSegmentListener(listener: CompletedSegmentListener)
+    {
         this.segmentCompletedListener = listener
     }
 
@@ -97,8 +150,15 @@ class SegmentedProgressBar : View {
      * Start filling the next unfilled segment.
      * @param timeInMilliseconds total time that will take for the segment to fill.
      */
-    fun playSegment(timeInMilliseconds: Long) {
-        if (!drawingTimer.isRunning) {
+    fun playSegment(timeInMilliseconds: Long)
+    {
+        if (properties.segmentedContainerColors[lastCompletedSegment] != null)
+            fillRectanglePaint = buildFillRectanglePaint(properties.segmentedContainerColors[lastCompletedSegment]!!)
+        else
+            fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
+
+        if (!drawingTimer.isRunning)
+        {
             drawingTimer.start(timeInMilliseconds)
         }
     }
@@ -106,8 +166,15 @@ class SegmentedProgressBar : View {
     /**
      * Equivalent to [playSegment], but without animation.
      */
-    fun incrementCompletedSegments() {
-        if (lastCompletedSegment <= properties.segmentCount) {
+    fun incrementCompletedSegments()
+    {
+        if(currentPartialCompletedSegment!=0f)
+        {
+            currentPartialCompletedSegment=0f
+        }
+
+        if (lastCompletedSegment <= properties.segmentCount)
+        {
             currentSegmentProgressInPx = 0
             drawingTimer.reset()
             lastCompletedSegment++
@@ -139,19 +206,28 @@ class SegmentedProgressBar : View {
     /**
      * Directly the given number of [completedSegments].
      */
-    fun setCompletedSegments(completedSegments: Int) {
-        if (completedSegments <= properties.segmentCount) {
+    fun setCompletedSegments(completedSegments: Int, currentPartialCompletedSegment: Float = 0f)
+    {
+        if (completedSegments <= properties.segmentCount)
+        {
             currentSegmentProgressInPx = 0
+            this.currentPartialCompletedSegment = currentPartialCompletedSegment
             drawingTimer.reset()
             lastCompletedSegment = completedSegments
             invalidate()
         }
     }
 
+    fun setCompletedSegments(completedSegments: Int)
+    {
+        setCompletedSegments(completedSegments, 0f)
+    }
+
     /*
       PRIVATE METHODS
        */
-    private fun drawContainerRectangles(canvas: Canvas) {
+    private fun drawContainerRectangles(canvas: Canvas)
+    {
         val segmentWidth = segmentWidth
 
         var leftX = 0
@@ -159,15 +235,18 @@ class SegmentedProgressBar : View {
         val topY = 0
         val botY = height
 
-        for (i in 0 until properties.segmentCount) {
-            drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(),
-                    containerRectanglePaint)
+        for (i in 0 until properties.segmentCount)
+        {
+            drawRoundedRect(
+                canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(),
+                containerRectanglePaint)
             leftX += segmentWidth + properties.segmentGapWidth
             rightX = leftX + segmentWidth
         }
     }
 
-    private fun drawCompletedRectangles(canvas: Canvas) {
+    private fun drawCompletedRectangles(canvas: Canvas)
+    {
         val segmentWidth = segmentWidth
 
         var leftX = 0
@@ -175,31 +254,39 @@ class SegmentedProgressBar : View {
         val topY = 0
         val botY = height
 
-        for (i in 0 until lastCompletedSegment) {
-            drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), fillRectanglePaint)
+        for (i in 0 until lastCompletedSegment)
+        {
+
+
+            if (containerColor[i] != null)
+                drawRoundedRect(
+                    canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), buildFillRectanglePaint(containerColor[i]!!))
+            else
+                drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), fillRectanglePaint)
             leftX += segmentWidth + properties.segmentGapWidth
             rightX = leftX + segmentWidth
         }
     }
 
-    private fun drawCurrentRectangle(canvas: Canvas) {
+    private fun drawCurrentRectangle(canvas: Canvas)
+    {
         val segmentWidth = segmentWidth
 
         val leftX = lastCompletedSegment * (segmentWidth + properties.segmentGapWidth)
+        if (currentPartialCompletedSegment != 0f)
+        {
+            currentSegmentProgressInPx = (segmentWidth * currentPartialCompletedSegment).toInt()
+        }
+
         val rightX = leftX + currentSegmentProgressInPx
         val topY = 0
         val botY = height
+
         drawRoundedRect(canvas, leftX.toFloat(), topY.toFloat(), rightX.toFloat(), botY.toFloat(), fillRectanglePaint)
     }
 
-    private fun drawRoundedRect(
-        canvas: Canvas,
-        left: Float,
-        top: Float,
-        right: Float,
-        bottom: Float,
-        paint: Paint
-    ) {
+    private fun drawRoundedRect(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float, paint: Paint)
+    {
 
         val path = Path()
         var rx = properties.cornerRadius.toFloat()
@@ -232,14 +319,16 @@ class SegmentedProgressBar : View {
         canvas.drawPath(path, paint)
     }
 
-    private fun buildFillRectanglePaint(@ColorInt color: Int): Paint {
+    private fun buildFillRectanglePaint(@ColorInt color: Int): Paint
+    {
         val paint = Paint()
         paint.color = color
         paint.style = Paint.Style.FILL
         return paint
     }
 
-    private fun buildContainerRectanglePaint(@ColorInt color: Int): Paint {
+    private fun buildContainerRectanglePaint(@ColorInt color: Int): Paint
+    {
         val paint = Paint()
         paint.color = color
         paint.style = Paint.Style.FILL
@@ -250,6 +339,7 @@ class SegmentedProgressBar : View {
         get() = width / properties.segmentCount - properties.segmentGapWidth
 }
 
-interface CompletedSegmentListener {
+interface CompletedSegmentListener
+{
     fun onSegmentCompleted(segmentCount: Int)
 }

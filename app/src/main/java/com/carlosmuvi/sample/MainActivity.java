@@ -1,5 +1,6 @@
 package com.carlosmuvi.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
         //set filled segments directly
         segmentedProgressBar.setCompletedSegments(1);
+
+        segmentedProgressBar.setSegmentCount(10);
+
+        segmentedProgressBar.setProgress(55);
+        segmentedProgressBar.setFillColor(Color.parseColor("#F56200"),0);
+        segmentedProgressBar.setFillColor(Color.parseColor("#F56200"),1);
+        segmentedProgressBar.setFillColor(Color.parseColor("#F5C300"),2);
+        segmentedProgressBar.setFillColor(Color.parseColor("#F5C300"),3);
+        segmentedProgressBar.setFillColor(Color.parseColor("#8AF400"),4);
 
         segmentedProgressBar.setCompletedSegmentListener(new CompletedSegmentListener() {
             @Override

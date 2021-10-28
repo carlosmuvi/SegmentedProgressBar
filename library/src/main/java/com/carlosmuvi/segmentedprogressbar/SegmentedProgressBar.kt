@@ -44,8 +44,7 @@ class SegmentedProgressBar : View
 
         fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
 
-        Log.d("hefere", "initView: 123 " + properties.segmentedContainerColors[0])
-    }
+           }
 
     private fun initPropertiesModel(attrs: AttributeSet?)
     {
@@ -62,8 +61,11 @@ class SegmentedProgressBar : View
         drawingTimer = DrawingTimer()
 
 
+
         drawingTimer.setListener { currentTicks, totalTicks ->
             val segmentWidth = segmentWidth
+
+
 
             currentSegmentProgressInPx = currentTicks * segmentWidth / totalTicks
             if (totalTicks <= currentTicks)
@@ -71,7 +73,12 @@ class SegmentedProgressBar : View
                 lastCompletedSegment++
                 currentSegmentProgressInPx = 0
             }
-            if (totalTicks == currentTicks) segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
+            if (totalTicks == currentTicks)
+            {
+                if(currentPartialCompletedSegment!=0f)
+                    currentPartialCompletedSegment=0f
+                segmentCompletedListener?.onSegmentCompleted(lastCompletedSegment)
+            }
             invalidate()
         }
     }
@@ -147,6 +154,8 @@ class SegmentedProgressBar : View
     {
         if (properties.segmentedContainerColors[lastCompletedSegment] != null)
             fillRectanglePaint = buildFillRectanglePaint(properties.segmentedContainerColors[lastCompletedSegment]!!)
+        else
+            fillRectanglePaint = buildFillRectanglePaint(properties.fillColor)
 
         if (!drawingTimer.isRunning)
         {
@@ -159,6 +168,11 @@ class SegmentedProgressBar : View
      */
     fun incrementCompletedSegments()
     {
+        if(currentPartialCompletedSegment!=0f)
+        {
+            currentPartialCompletedSegment=0f
+        }
+
         if (lastCompletedSegment <= properties.segmentCount)
         {
             currentSegmentProgressInPx = 0

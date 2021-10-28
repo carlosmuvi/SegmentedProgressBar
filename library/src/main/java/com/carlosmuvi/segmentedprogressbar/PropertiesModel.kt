@@ -40,8 +40,6 @@ class PropertiesModel(context: Context, attrs: AttributeSet?)
                     styledAttrs.getDimensionPixelSize(R.styleable.SegmentedProgressBar_corner_radius, cornerRadius)
             val totalProgress: Int = styledAttrs.getInt(R.styleable.SegmentedProgressBar_total_progress, 100)
 
-            Log.d("hefere", "progressValue : " + progressValue)
-            Log.d("hefere", "segmentCount : " + segmentCount)
 
             progressValue = styledAttrs.getFloat(R.styleable.SegmentedProgressBar_progress, 0f)
 

@@ -22,7 +22,11 @@ allprojects {
 
 ```gradle
 dependencies {
-        compile 'com.github.carlosmuvi:SegmentedProgressBar:0.8.3'
+        implementation 'com.github.carlosmuvi:SegmentedProgressBar:0.8.1'
+        //NOTE the 0.8.3 & 0.8.2 versions are not available on jitpack.
+        
+        
+        //compile 'com.github.carlosmuvi:SegmentedProgressBar:0.8.3'
 }
 
 ```
